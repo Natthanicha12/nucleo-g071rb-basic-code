@@ -854,7 +854,7 @@ int main(void)
       Error_Handler();
  80006a4:	f000 f9dc 	bl	8000a60 <Error_Handler>
 
-  // Start PWM (ต้อง channel เดียวกับที่ config)
+  // Start PWM on the same channel that was configured.
   if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1) != HAL_OK)
  80006a8:	4b06      	ldr	r3, [pc, #24]	@ (80006c4 <main+0x68>)
  80006aa:	2100      	movs	r1, #0
@@ -1083,6 +1083,7 @@ static void MX_ADC1_Init(void)
  80007d8:	2220      	movs	r2, #32
  80007da:	2100      	movs	r1, #0
  80007dc:	5499      	strb	r1, [r3, r2]
+  // TODO Don’t start the conversion automatically. Wait for the trigger from Timer 2 (TRGO).
   hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIG_T2_TRGO;
  80007de:	4b1d      	ldr	r3, [pc, #116]	@ (8000854 <MX_ADC1_Init+0xd0>)
  80007e0:	2290      	movs	r2, #144	@ 0x90
@@ -1093,6 +1094,7 @@ static void MX_ADC1_Init(void)
  80007e8:	22c0      	movs	r2, #192	@ 0xc0
  80007ea:	0112      	lsls	r2, r2, #4
  80007ec:	629a      	str	r2, [r3, #40]	@ 0x28
+
   hadc1.Init.DMAContinuousRequests = DISABLE;
  80007ee:	4b19      	ldr	r3, [pc, #100]	@ (8000854 <MX_ADC1_Init+0xd0>)
  80007f0:	222c      	movs	r2, #44	@ 0x2c
@@ -1215,7 +1217,7 @@ static void MX_TIM2_Init(void)
  800088e:	4b1f      	ldr	r3, [pc, #124]	@ (800090c <MX_TIM2_Init+0xb0>)
  8000890:	2200      	movs	r2, #0
  8000892:	609a      	str	r2, [r3, #8]
-  htim2.Init.Period = 3124;
+  htim2.Init.Period = 3124; //TODO 320 data /sec
  8000894:	4b1d      	ldr	r3, [pc, #116]	@ (800090c <MX_TIM2_Init+0xb0>)
  8000896:	4a1e      	ldr	r2, [pc, #120]	@ (8000910 <MX_TIM2_Init+0xb4>)
  8000898:	60da      	str	r2, [r3, #12]
