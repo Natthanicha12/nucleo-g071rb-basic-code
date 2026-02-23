@@ -1,0 +1,16 @@
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:110:9:IKS02A1_MOTION_SENSOR_Init	25
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:325:9:IKS02A1_MOTION_SENSOR_DeInit	3
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:351:9:IKS02A1_MOTION_SENSOR_GetCapabilities	3
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:377:9:IKS02A1_MOTION_SENSOR_ReadID	3
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:406:9:IKS02A1_MOTION_SENSOR_Enable	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:445:9:IKS02A1_MOTION_SENSOR_Disable	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:485:9:IKS02A1_MOTION_SENSOR_GetAxes	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:525:9:IKS02A1_MOTION_SENSOR_GetAxesRaw	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:565:9:IKS02A1_MOTION_SENSOR_GetSensitivity	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:606:9:IKS02A1_MOTION_SENSOR_GetOutputDataRate	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:646:9:IKS02A1_MOTION_SENSOR_GetFullScale	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:687:9:IKS02A1_MOTION_SENSOR_SetOutputDataRate	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:727:9:IKS02A1_MOTION_SENSOR_SetFullScale	4
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:771:16:ISM330DHCX_0_Probe	15
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:858:16:IIS2DLPC_0_Probe	13
+../Drivers/BSP/IKS02A1/iks02a1_motion_sensors.c:932:16:IIS2MDC_0_Probe	13
