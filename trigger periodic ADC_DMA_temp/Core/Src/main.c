@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#define N 100
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,9 +65,10 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint16_t adc_data[1];
 
-float temperature[1600];
+uint16_t adc_data[N];
+
+float temperature[N];
 uint32_t index1 = 0;
 uint32_t time1 , time2 ;
 
@@ -113,7 +115,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_ADCEx_Calibration_Start(&hadc1);
-  HAL_ADC_Start_DMA(&hadc1 , (uint32_t *)adc_data , 1);
+  HAL_ADC_Start_DMA(&hadc1 , (uint32_t *)adc_data , N);
   HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
 
@@ -253,7 +255,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 64-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 1000-1;
+  htim2.Init.Period = 10000-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
@@ -368,11 +370,12 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
     if (hadc->Instance == ADC1)
     {
-    	temperature[index1++] = __HAL_ADC_CALC_TEMPERATURE(3300, adc_data[0], ADC_RESOLUTION_12B);
+    	temperature[index1] = __HAL_ADC_CALC_TEMPERATURE(3300, adc_data[index1], ADC_RESOLUTION_12B);
+    	index1++;
 
     	 time2 = HAL_GetTick() - time1;
 
-    	 if(index1 % 1000 == 0){
+    	 if(index1 % 100 == 0){
     				  printf("%ld %lu \r\n" , index1 , time2);
     				  printf("ADC1: %d  temp : %f \r\n", adc_data[0] , temperature[index1 - 1]);
 
