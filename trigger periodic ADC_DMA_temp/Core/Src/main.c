@@ -70,7 +70,8 @@ uint16_t adc_data[N];
 
 float temperature[N];
 uint32_t index1 = 0;
-uint32_t time1 , time2 ;
+volatile uint8_t half_ready = 0;
+volatile uint8_t full_ready = 0;
 
 int _write(int file, char *ptr, int len)
 {
@@ -124,6 +125,15 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  if(half_ready && full_ready){
+		  half_ready = full_ready = 0;
+		  temperature[index1] = __HAL_ADC_CALC_TEMPERATURE(3300, adc_data[index1], ADC_RESOLUTION_12B);
+		  index1++;
+		  	  if(index1 % 100 == 0){
+		      		 printf("ADC1: %d  temp : %f \r\n", adc_data[index1] , temperature[index1]);
+		      	     index1 = 0;
+		       }
+	     }
 
     /* USER CODE BEGIN 3 */
   }
@@ -366,29 +376,17 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc)
+{
+	half_ready = 1;
+
+}
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-    if (hadc->Instance == ADC1)
-    {
-    	temperature[index1] = __HAL_ADC_CALC_TEMPERATURE(3300, adc_data[index1], ADC_RESOLUTION_12B);
-    	index1++;
-
-    	 time2 = HAL_GetTick() - time1;
-
-    	 if(index1 % 100 == 0){
-    				  printf("%ld %lu \r\n" , index1 , time2);
-    				  printf("ADC1: %d  temp : %f \r\n", adc_data[0] , temperature[index1 - 1]);
-
-    	time1 =  HAL_GetTick();
-    	index1 = 0;
-     }
-    }
+    full_ready = 1;
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
 
-}
 /* USER CODE END 4 */
 
 /**
